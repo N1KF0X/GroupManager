@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>Менеджер групп</title>
+</head>
+<body>
+    <h1>Менеджер групп</h1>
+    <h2>{% block title %}{% endblock title %}</h2>
+    <main>{% block main %}{% endblock main %}</main>
+</body>
+</html>
