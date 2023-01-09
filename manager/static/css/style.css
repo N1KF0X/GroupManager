@@ -7,15 +7,18 @@ body, html{
     height: 100%;
     width: 100%;
     margin: 0px;
-    background-color: white;
+    background-color:white;
 }
 
 main {
     margin-left: 300px;
     margin-right: 300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding-left: 50px;
     padding-right: 50px;
     border: solid;
+    align-items: center;
 }
 
 footer {
@@ -44,3 +47,36 @@ header, main{
     padding-bottom: 20px;
 }
 
+
+
+h2 {
+    margin-bottom: 30px;
+}
+
+table,
+td {
+    border: 1px solid #333;
+    text-align: center;
+}
+
+td {
+    height: 40px;
+}
+
+table {
+    width: 800px;
+    margin: auto;
+}
+
+thead,
+tfoot {
+    background-color: #333;
+    color: #fff;
+}
+
+.container {
+    overflow-y: scroll;
+    width: 815px;
+    height: 300px;
+    margin: auto;
+}

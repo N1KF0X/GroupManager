@@ -1,15 +1,51 @@
 {% extends "base.html" %}
 {% block title %}Менеджер групп{% endblock title %}
-{% block main %}<table>
+{% block main %}
+<div class="container">
+<table>
     <thead>
         <tr>
-            <th colspan="2">The table header</th>
+            <th colspan="4">Ваши группы</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>The table body</td>
-            <td>with two columns</td>
+            <td>Название группы</td>
+            <td>Направление</td>
+            <td>Возраст</td>
+            <td>Количество</td>
+        </tr>
+        <tr>
+            <td>{{groupData.0}}</td>
+            <td>{{groupData.1}}</td>
+            <td>{{groupData.2}}</td>
+            <td>{{groupData.3}}</td>
+        </tr>
+        <tr>
+            <td>{{groupData.0}}</td>
+            <td>{{groupData.1}}</td>
+            <td>{{groupData.2}}</td>
+            <td>{{groupData.3}}</td>
+        </tr>
+        <tr>
+            <td>{{groupData.0}}</td>
+            <td>{{groupData.1}}</td>
+            <td>{{groupData.2}}</td>
+            <td>{{groupData.3}}</td>
+        </tr>
+        <tr>
+            <td>{{groupData.0}}</td>
+            <td>{{groupData.1}}</td>
+            <td>{{groupData.2}}</td>
+            <td>{{groupData.3}}</td>
+        </tr>
+        <tr>
+            <td>{{groupData.0}}</td>
+            <td>{{groupData.1}}</td>
+            <td>{{groupData.2}}</td>
+            <td>{{groupData.3}}</td>
         </tr>
     </tbody>
-</table>{% endblock main %}
+</table>
+</div>
+{% endblock main %}

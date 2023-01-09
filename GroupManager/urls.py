@@ -5,5 +5,7 @@ from django.views.generic import TemplateView
  
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", TemplateView.as_view(template_name="main.html")),
+    path("", views.home),
+    path("main", views.main),
+    path("about", views.about),
 ]
