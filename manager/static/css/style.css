@@ -1,3 +1,7 @@
+h1 {
+    text-align: center;
+}
+
 h2 {
     margin-bottom: 30px;
 }
@@ -6,38 +10,46 @@ body, html{
     height: 100%;
     width: 100%;
     margin: 0px;
-    background-color:rgb(207, 119, 119);
+    background-color:white;
 }
 
-header, main{
-    padding-top: 20px;
-    padding-bottom: 20px;
+body {
+    padding-top: 120px;
+    padding-bottom: 120px;
 }
+
+header {
+    height: 80px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+}
+
+
 
 main {
-    margin-left: 300px;
-    margin-right: 300px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
+    margin: 0px auto 20px;
+    padding: 50px;
+    padding-top: 20px;
     border: solid;
-    
+    height: 1000px;
+    width: 1000px
 }
 
 footer {
-    position:fixed;
+    position: absolute;
     height: 100px;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom:auto;
     padding-left: 10px;
     padding-top: 5px;
     font-size: 20px; 
 }
 
 table {
-
+    width: 785px;
     margin: auto;
 }
 
@@ -58,10 +70,12 @@ tfoot {
 }
 
 .container {
-
-    width: auto;
-    height: 300px;
+    overflow-y: scroll;
     margin: auto;
+    width: auto;
+    max-width: 800px;  
+    height: auto;
+    max-height: 300px;   
 }
 
 .colors {
