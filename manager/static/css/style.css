@@ -1,13 +1,17 @@
-h1 {
-
-    text-align: center;  
+h2 {
+    margin-bottom: 30px;
 }
 
 body, html{
     height: 100%;
     width: 100%;
     margin: 0px;
-    background-color:white;
+    background-color:rgb(207, 119, 119);
+}
+
+header, main{
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 main {
@@ -18,11 +22,11 @@ main {
     padding-left: 50px;
     padding-right: 50px;
     border: solid;
-    align-items: center;
+    
 }
 
 footer {
-    position: absolute;
+    position:fixed;
     height: 100px;
     left: 0;
     right: 0;
@@ -32,25 +36,9 @@ footer {
     font-size: 20px; 
 }
 
-.colors {
-    color: white;
-    background-color: #4682B4;
-}
+table {
 
-h1, h2 {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-header, main{
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-
-
-h2 {
-    margin-bottom: 30px;
+    margin: auto;
 }
 
 table,
@@ -63,11 +51,6 @@ td {
     height: 40px;
 }
 
-table {
-    width: 800px;
-    margin: auto;
-}
-
 thead,
 tfoot {
     background-color: #333;
@@ -75,8 +58,13 @@ tfoot {
 }
 
 .container {
-    overflow-y: scroll;
-    width: 815px;
+
+    width: auto;
     height: 300px;
     margin: auto;
+}
+
+.colors {
+    color: white;
+    background-color: #4682B4;
 }
