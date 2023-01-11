@@ -8,7 +8,7 @@ class User(models.Model):
 
 class Group(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    name = models.CharField(max_length = 20)
+    name = models.CharField(max_length = 20, unique=True)
     course = models.CharField(max_length = 20)
     minAge = models.PositiveIntegerField()
     maxAge = models.PositiveIntegerField()
