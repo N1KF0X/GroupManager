@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="data-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th colspan="4">Ваши группы</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr> 
+                <div class="data-table">
+                    <td>Название группы</td>
+                    <td>Направление</td>
+                    <td>Возраст</td>
+                    <td>Количество</td>  
+                </div>                  
+            </tr>
+            {% for group in groups %}
+            <tr>
+                <td>{{group.name}}</td>
+                <td>{{group.course}}</td>
+                <td>{{group.minAge}} - {{group.maxAge}}</td>
+                <td>0/{{group.capacity}}</td>
+            </tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+</div>
+<div class="add-container">
+    <form action="{% url 'main' %}" method="post">
+        {% csrf_token %}
+        {% for f in form %}
+        <p>
+            <label class="form-label" for="{{ f.id_for_label }}">
+                {{f.label}}: 
+            </label>{{ f }}
+        </p>
+        {% endfor %}
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+{% endblock main %}

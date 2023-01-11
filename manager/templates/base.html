@@ -4,11 +4,18 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <title>Менеджер групп</title>
+    <title>{{title}}</title>
 </head>
 <body>
-    <h1>Менеджер групп</h1>
-    <h2>{% block title %}{% endblock title %}</h2>
-    <main>{% block main %}{% endblock main %}</main>
+    <header class="colors">
+        <h1>Менеджер групп</h1>
+    </header>      
+    <main>  
+        <h2>{% block title %}{% endblock title %}</h2>
+        {% block main %}{% endblock main %}
+    </main>
+    <footer class="colors">
+        Подвал
+    </footer>
 </body>
 </html>

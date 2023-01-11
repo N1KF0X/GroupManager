@@ -1,4 +1,109 @@
 h1 {
-    color: #4682B4;
     text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+body, html{
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    background-color:white;
+}
+
+body {
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+
+header {
+    height: 80px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+}
+
+main {
+    margin: 0px auto 20px;
+    padding: 50px;
+    padding-top: 20px;
+    border: solid;
+    height: 1000px;
+    width: 1000px
+}
+
+footer {
+    position: absolute;
+    height: 100px;
+    left: 0;
+    right: 0;
+    bottom:auto;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 20px; 
+}
+
+.data-table {
+    text-align: center;
+}
+
+table {
+    width: 780px;
+    margin: auto;
+}
+
+table, td {
+    border: solid 1px black;
+}
+
+td {
+    height: 40px;
+}
+
+thead, tfoot {
+    background-color: #333;
+    color: #fff;
+}
+
+.data-container {
+    overflow-y: scroll;
+    margin: auto;
+    margin-bottom: 50px;
+    width: auto;
+    max-width: 800px;  
+    height: auto;
+    max-height: 300px;   
+}
+
+.colors {
+    color: white;
+    background-color: #4682B4;
+}
+
+p {
+    width: auto;
+    max-width: 800px; 
+}
+
+.form-label {
+    display: inline-block;
+    min-width: 300px;
+    vertical-align: top;
+}
+
+.add-container {
+    margin: auto;
+    margin-bottom: 10px;
+    width: auto;
+    max-width: 800px;  
+    height: auto;
+    max-height: 300px; 
+}
+
+.form-input {
+    width: 300px;
+    font-size: 16px;
 }

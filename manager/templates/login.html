@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Менеджер групп: Вход{% endblock title %}
+{% block main %}
+<form method="post">
+    {% csrf_token %}
+    <div class="add-container">
+        <form method="post">
+            {% csrf_token %}
+            {% for f in form %}
+            <p>
+                <label class="form-label" for="{{ f.id_for_label }}">
+                    {{f.label}}: 
+                </label>{{ f }}
+            </p>
+            {% endfor %}
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+</form>
+{% endblock main %}
