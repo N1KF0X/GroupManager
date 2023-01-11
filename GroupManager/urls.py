@@ -6,8 +6,7 @@ from manager.views import *
  
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", views.home),
+    path("", RegisterUser.as_view(), name='home'),
     path("main/", Groups.as_view(), name='main'),
-    path("about/", views.about),
-    #path("register/", RegisterUser.as_view(), name = "register")
+    path("login/", LoginUser.as_view(), name = "login")
 ]
