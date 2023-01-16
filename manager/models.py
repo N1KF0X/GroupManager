@@ -1,14 +1,18 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 
 class Group(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    name = models.CharField(max_length = 20, unique=True)
-    course = models.CharField(max_length = 20)
-    minAge = models.PositiveIntegerField()
-    maxAge = models.PositiveIntegerField()
-    capacity = models.PositiveIntegerField()
+    name = models.CharField(max_length = 20, unique=True, verbose_name="Название")
+    course = models.CharField(max_length = 20, verbose_name="Курс/Направление")
+    minAge = models.PositiveIntegerField(verbose_name="Минимальный возраст")
+    maxAge = models.PositiveIntegerField(verbose_name="Максимальный возраст")
+    capacity = models.PositiveIntegerField(verbose_name="Количество мест")
+
+
 
 class GroupMember(models.Model):
     group = models.ForeignKey(Group, on_delete = models.CASCADE)

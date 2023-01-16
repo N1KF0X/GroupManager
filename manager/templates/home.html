@@ -1,19 +1,8 @@
 {% extends "base.html" %}
 {% block main %}
-<form method="post">
-    {% csrf_token %}
-    <div class="add-container">
-        <form method="post">
-            {% csrf_token %}
-            {% for f in form %}
-            <p>
-                <label class="form-label" for="{{ f.id_for_label }}">
-                    {{f.label}}: 
-                </label>{{ f }}
-            </p>
-            {% endfor %}
-            <button type="submit">Создать аккаунт</button>
-        </form>
-    </div>
-</form>
+{% if request.user.is_authenticated %}
+<meta http-equiv="Refresh" content="0; {% url 'main' %}">
+{% else %}
+<p class="label"><a href="{% url 'reg' %}">Зарегистрироваться</a> | <a href="{% url 'login' %}">Войти</a></p>
+{% endif %}
 {% endblock main %}

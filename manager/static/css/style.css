@@ -1,19 +1,11 @@
-h1 {
-    text-align: center;
-}
-
-h2 {
-    margin-bottom: 30px;
-}
-
 body, html{
-    height: 100%;
     width: 100%;
     margin: 0px;
     background-color:white;
 }
 
 body {
+    min-height: 100%;
     padding-top: 120px;
     padding-bottom: 120px;
 }
@@ -24,33 +16,28 @@ header {
     left: 0;
     top: 0;
     right: 0;
+
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
 }
 
 main {
+    height: 600px;
     margin: 0px auto 20px;
     padding: 50px;
     padding-top: 20px;
     border: solid;
-    height: 1000px;
     width: 1000px
 }
 
-footer {
-    position: absolute;
-    height: 100px;
-    left: 0;
-    right: 0;
-    bottom:auto;
-    padding-left: 10px;
-    padding-top: 5px;
-    font-size: 20px; 
-}
-
-.data-table {
-    text-align: center;
-}
-
 table {
+    text-align: center;
     width: 780px;
     margin: auto;
 }
@@ -68,8 +55,22 @@ thead, tfoot {
     color: #fff;
 }
 
-.data-container {
+footer {
+    position: fixed;
+    height: 100px;
+    left: 0;
+    right: 0;
+    bottom:0;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 20px; 
+}
+
+.scroll {
     overflow-y: scroll;
+}
+
+.container {
     margin: auto;
     margin-bottom: 50px;
     width: auto;
@@ -78,32 +79,25 @@ thead, tfoot {
     max-height: 300px;   
 }
 
-.colors {
-    color: white;
-    background-color: #4682B4;
-}
-
-p {
-    width: auto;
-    max-width: 800px; 
-}
-
 .form-label {
     display: inline-block;
     min-width: 300px;
     vertical-align: top;
 }
 
-.add-container {
-    margin: auto;
-    margin-bottom: 10px;
-    width: auto;
-    max-width: 800px;  
-    height: auto;
-    max-height: 300px; 
+.colors {
+    color: white;
+    background-color: #4682B4;
 }
 
-.form-input {
-    width: 300px;
-    font-size: 16px;
+.label {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 10;
+}
+
+.user-out {
+    text-align: right;
+    color: #000;
+    font-size: 25px;
+    margin: 10px;
 }
