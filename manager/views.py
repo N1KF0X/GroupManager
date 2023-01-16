@@ -1,27 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from .models import*
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from .forms import*
 
-#def main(request):
-    #if request.method == 'POST':
-    #    form = AddgroupForm(request.POST)
-    #    if form.is_valid():
-    #        form.save()    
-    #        return redirect("main")           
-    #else:
-    #    form = AddgroupForm()
-    #r = request.user.id
-    #groups = Group.objects.filter(user_id = 1)
-    #data = {"title": "Менеджер групп", "groups": groups, "form": form}
-
-    #return render(request, "main.html", data)
-
 def home(request):
-    return render(request, "home.html")
+    data = {'title':'Добро пожаловать'}
+    return render(request, "home.html", context=data)
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 class Groups(ListView):
     model = Group
@@ -31,7 +24,6 @@ class Groups(ListView):
     def get_context_data(self, *, object_list = None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Менеджер групп'
-        context['form'] = AddgroupForm()
         return context
     
     def get_queryset(self):
@@ -39,12 +31,13 @@ class Groups(ListView):
 
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
-    template_name = 'home.html'
+    template_name = 'reg.html'
     success_url = reverse_lazy('login')    
 
     def get_context_data(self, *, object_list = None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Менеджер групп: Регистрация'
+        context['title'] = 'Регистрация'
+        context['button_title'] = 'Создать аккаунт'
         return context
 
 class LoginUser(LoginView):
@@ -56,7 +49,24 @@ class LoginUser(LoginView):
 
     def get_context_data(self, *, object_list = None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Менеджер групп: Вход'
+        context['title'] = 'Вход'
+        context['button_title'] = 'Войти'
         return context
 
+class AddGroup(CreateView):
+    form_class = AddgroupForm
+    template_name = 'create.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('main') 
 
+    def get_context_data(self, *, object_list = None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Создать группу'
+        context['button_title'] = 'Создать группу'
+        return context
+
+    def form_valid(self, form):
+        fields = form.save(commit=False)
+        fields.user = self.request.user
+        fields.save()
+        return super().form_valid(form)
