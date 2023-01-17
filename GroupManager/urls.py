@@ -7,7 +7,7 @@ from manager.views import*
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.home, name='home'),
-    path("main/", Groups.as_view(), name='main'),
+    path("main/", views.main, name='main'),
     path("login/", LoginUser.as_view(), name = "login"),
     path("create_group/", AddGroup.as_view(), name="create_group"),
     path("reg/", RegisterUser.as_view(), name="reg"),

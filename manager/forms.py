@@ -3,6 +3,8 @@ from .models import *
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 
+
+
 class AddgroupForm(forms.ModelForm):
 
     class Meta:
@@ -31,6 +33,16 @@ class RegisterUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2')
+
+class OrderingForm(forms.Form):
+    ordering = forms.ChoiceField(label = "Сортировать по", required=False, choices=[
+        ["name", "По название"],
+        ["course", "По направлению/курсу"],
+        ["age" , "По возрасту"],
+    ])
+
+class DeleteForm(forms.Form):
+    deleteList = forms.CharField(label= 'Название группы')
 
    # name = forms.CharField(max_length=20, label="Имя группы", widget=forms.TextInput(attrs={'class': 'form-input'}))
    # course = forms.CharField(max_length=20, label="Направление/Курс")

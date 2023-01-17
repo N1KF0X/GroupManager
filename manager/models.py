@@ -6,11 +6,14 @@ from django.contrib.auth.decorators import login_required
 
 class Group(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    name = models.CharField(max_length = 20, unique=True, verbose_name="Название")
+    name = models.CharField(max_length = 20, unique=True, verbose_name="Название", db_index=True)
     course = models.CharField(max_length = 20, verbose_name="Курс/Направление")
     minAge = models.PositiveIntegerField(verbose_name="Минимальный возраст")
     maxAge = models.PositiveIntegerField(verbose_name="Максимальный возраст")
     capacity = models.PositiveIntegerField(verbose_name="Количество мест")
+
+    def __str__(self):
+        return self.name
 
 
 

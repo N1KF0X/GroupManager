@@ -11,7 +11,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th colspan="4">Ваши группы</th>
+                <th colspan="5">Ваши группы</th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +19,8 @@
                 <td>Название группы</td>
                 <td>Направление</td>
                 <td>Возраст</td>
-                <td>Количество</td>                 
+                <td>Количество</td>      
+                <td>Просмотреть группу</td>           
             </tr>
             {% for group in groups %}
             <tr>
@@ -27,11 +28,27 @@
                 <td>{{group.course}}</td>
                 <td>{{group.minAge}} - {{group.maxAge}}</td>
                 <td>0/{{group.capacity}}</td>
+                <td><a class="label" href="{% url 'create_group' %}">Перейти</a></td>
             </tr>
             {% endfor %}      
         </tbody>
     </table>
 </div>
+<form action="{% url 'main' %}" method="get"> 
+    {% csrf_token %}
+    <div class="container">
+        <p>{{ form1 }}</p>
+        <button type="submit" name="sort">Сортировать</button>
+    </div>
+</form>
+<form method="post"> 
+    {% csrf_token %}
+    <div class="container">
+        <p>{{ form2 }}</p>
+        <button type="submit" name="delete">Удалить</button>
+    </div>
+</form>
+
 <div class="container">
     <p>
         <a class="label" href="{% url 'create_group' %}">Добавить группу</a>

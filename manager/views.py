@@ -16,6 +16,30 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
+def main(request):
+    groups = Group.objects.filter(user_id = request.user.id )
+    form1 = OrderingForm(request.GET)
+    form2 = DeleteForm(request.POST)
+
+    if 'delete' in request.POST:
+        if form2.is_valid():
+            Group.objects.filter(name = form2.cleaned_data['deleteList']).delete()
+
+    if 'sort' in request.GET:
+        if form1.is_valid():
+            groups = groups.order_by(form1.cleaned_data['ordering'])
+
+    form2.queryset = groups
+
+    data = {
+        'groups': groups, 
+        "form1": form1,
+        "form2": form2
+    }
+
+    return render(request, 'main.html', data)
+
+
 class Groups(ListView):
     model = Group
     template_name = "main.html"
