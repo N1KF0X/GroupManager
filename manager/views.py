@@ -23,7 +23,7 @@ def main(request):
 
     if 'delete' in request.POST:
         if form2.is_valid():
-            Group.objects.filter(name = form2.cleaned_data['deleteList']).delete()
+            Group.objects.filter(name = form2.cleaned_data['deleteList'].name).delete()
 
     if 'sort' in request.GET:
         if form1.is_valid():

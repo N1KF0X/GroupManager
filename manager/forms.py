@@ -42,7 +42,7 @@ class OrderingForm(forms.Form):
     ])
 
 class DeleteForm(forms.Form):
-    deleteList = forms.CharField(label= 'Название группы')
+    deleteList = forms.ModelChoiceField(label= 'Название группы', queryset=Group.objects.all())
 
    # name = forms.CharField(max_length=20, label="Имя группы", widget=forms.TextInput(attrs={'class': 'form-input'}))
    # course = forms.CharField(max_length=20, label="Направление/Курс")
