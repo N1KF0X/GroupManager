@@ -7,6 +7,7 @@ from .models import*
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms import*
+from django.http.response import HttpResponse
 
 def home(request):
     data = {'title':'Добро пожаловать'}
@@ -100,21 +101,23 @@ class AddGroup(CreateView):
         return super().form_valid(form)
 
 class ChangeGroup(UpdateView):
-    form_class = AddgroupForm
+    model = Group
+    #form_class = AddGroup
+    #context_object_name = 'form'
+    fields = ['name', 'course', 'minAge', 'maxAge', 'capacity']
     template_name = 'create.html'
-    context_object_name = 'form'
-    
-    def get_success_url(self):
-        return reverse_lazy('main') 
+    success_url = reverse_lazy('main')
 
-    #def get_context_data(self, *, object_list = None, **kwargs):
-        #context = super().get_context_data(**kwargs)
-        #context['title'] = 'Создать группу'
-        #context['button_title'] = 'Создать группу'
-        #return context
+    def get_context_data(self, *, object_list = None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Изменить группу'
+        context['button_title'] = 'Изменить группу'
+        return context
 
-    #def form_valid(self, form):
-        #fields = form.save(commit=False)
-        #fields.user = self.request.user
-        #fields.save()
-        #return super().form_valid(form)
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+def pupa(request, pk):
+    data = {'title':'Добро пожаловать'}
+    return render(request, "create.html", context=data)
+

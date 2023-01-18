@@ -22,6 +22,10 @@ class AddgroupForm(forms.ModelForm):
         if minAge > maxAge:
             raise ValidationError('Минимальный врзраст не может быть больше максимального')
         return maxAge
+
+#class ChangeGroupForm(forms.Form):
+
+
     
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label="Имя пользователя", widget = forms.TextInput(attrs={'class': 'form-input'}))
