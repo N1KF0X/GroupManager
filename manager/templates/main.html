@@ -28,7 +28,7 @@
                 <td>{{group.course}}</td>
                 <td>{{group.minAge}} - {{group.maxAge}}</td>
                 <td>0/{{group.capacity}}</td>
-                <td><a class="label" href="{% url 'change' group.pk %}">Перейти</a></td>
+                <td><a class="label" href="{% url 'change' group.pk %}">Изменить</a> | <a class="label" href="{% url 'change' group.pk %}">Перейти</a></td>
             </tr>
             {% endfor %}      
         </tbody>

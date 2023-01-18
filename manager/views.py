@@ -85,7 +85,6 @@ class LoginUser(LoginView):
 class AddGroup(CreateView):
     form_class = AddgroupForm
     template_name = 'create.html'
-    context_object_name = 'form'
     success_url = reverse_lazy('main') 
 
     def get_context_data(self, *, object_list = None, **kwargs):
@@ -102,9 +101,7 @@ class AddGroup(CreateView):
 
 class ChangeGroup(UpdateView):
     model = Group
-    #form_class = AddGroup
-    #context_object_name = 'form'
-    fields = ['name', 'course', 'minAge', 'maxAge', 'capacity']
+    form_class = AddgroupForm
     template_name = 'create.html'
     success_url = reverse_lazy('main')
 
