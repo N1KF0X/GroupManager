@@ -12,4 +12,5 @@ urlpatterns = [
     path("create_group/", AddGroup.as_view(), name="create_group"),
     path("reg/", RegisterUser.as_view(), name="reg"),
     path("logout/", logout_user, name = "logout"),
+    path('change/<int:pk>',ChangeGroup.as_view(), name = 'change')
 ]

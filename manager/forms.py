@@ -3,8 +3,6 @@ from .models import *
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 
-
-
 class AddgroupForm(forms.ModelForm):
 
     class Meta:
@@ -24,7 +22,6 @@ class AddgroupForm(forms.ModelForm):
         if minAge > maxAge:
             raise ValidationError('Минимальный врзраст не может быть больше максимального')
         return maxAge
-
     
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label="Имя пользователя", widget = forms.TextInput(attrs={'class': 'form-input'}))
@@ -49,3 +46,5 @@ class DeleteForm(forms.Form):
    # minAge = forms.IntegerField(label="Минимальный возраст")
    # maxAge = forms.IntegerField(label="Максимальный возраст")
    # capacity = forms.IntegerField(label="Максимальное количество человек")
+
+

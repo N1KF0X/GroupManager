@@ -28,27 +28,38 @@
                 <td>{{group.course}}</td>
                 <td>{{group.minAge}} - {{group.maxAge}}</td>
                 <td>0/{{group.capacity}}</td>
-                <td><a class="label" href="{% url 'create_group' %}">Перейти</a></td>
+                <td><a class="label" href="{% url 'change' group.pk %}">Перейти</a></td>
             </tr>
             {% endfor %}      
         </tbody>
     </table>
 </div>
-<form action="{% url 'main' %}" method="get"> 
-    {% csrf_token %}
-    <div class="container">
-        <p>{{ form1 }}</p>
-        <button type="submit" name="sort">Сортировать</button>
-    </div>
-</form>
-<form method="post"> 
-    {% csrf_token %}
-    <div class="container">
-        <p>{{ form2 }}</p>
-        <button type="submit" name="delete">Удалить</button>
-    </div>
-</form>
-
+<div class="container">
+    <form action="{% url 'main' %}" method="get"> 
+        {% csrf_token %}
+        {% for f in form1 %}
+        <p>
+            <label class="form-label" for="{{ f.id_for_label }}">
+                {{f.label}}: 
+            </label>{{ f }}
+        </p>
+        {% endfor %}
+            <button type="submit" name="sort">Сортировать</button>
+    </form>
+</div>
+<div class="container">
+    <form method="post"> 
+        {% csrf_token %}
+        {% for f in form2 %}
+        <p>
+            <label class="form-label" for="{{ f.id_for_label }}">
+                {{f.label}}: 
+            </label>{{ f }}
+        </p>
+        {% endfor %}
+            <button type="submit" name="delete">Удалить</button>
+    </form>
+</div>
 <div class="container">
     <p>
         <a class="label" href="{% url 'create_group' %}">Добавить группу</a>
