@@ -4,10 +4,10 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from .models import*
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms import*
-from django.http.response import HttpResponse
+from django.shortcuts import get_object_or_404
+
 
 def home(request):
     data = {'title':'Добро пожаловать'}
@@ -18,9 +18,10 @@ def logout_user(request):
     return redirect('login')
 
 def main(request):
-    groups = Group.objects.filter(user_id = request.user.id )
-    form1 = OrderingForm(request.GET)
-    form2 = DeleteForm(request.POST)
+    user_id = request.user.id
+    groups = Group.objects.filter(user_id = user_id)
+    form1 = GroupsOrderingForm(request.GET)
+    form2 = DeleteGroupForm(request.user, request.POST) 
 
     if 'delete' in request.POST:
         if form2.is_valid():
@@ -33,8 +34,6 @@ def main(request):
             else:
                 groups = groups.order_by(form1.cleaned_data['ordering'])
 
-    form2.queryset = groups
-
     data = {
         'groups': groups, 
         "form1": form1,
@@ -44,6 +43,66 @@ def main(request):
 
     return render(request, 'main.html', data)
 
+
+def group(request, group_id):
+    members = GroupMember.objects.filter(group_id = group_id)
+    form1 = MembersOrderingForm(request.GET)
+    form2 = DeleteMemderForm(group_id, request.POST)  
+    group = Group.objects.get(id = group_id)
+
+    if 'delete' in request.POST:
+        if form2.is_valid():
+            GroupMember.objects.filter(name = form2.cleaned_data['deleteList'].name).delete()
+
+    if 'sort' in request.GET:
+        if form1.is_valid():
+            members = members.order_by(form1.cleaned_data['ordering'])
+
+    data = {
+        'members': members, 
+        "form1": form1,
+        "form2": form2,
+        "title": group.name,
+        'group':  group
+    }
+
+    return render(request, 'group.html', data)
+
+def add_member(request):
+    form = AddMemberForm(request.user, request.POST)
+
+    if form.is_valid():
+        try:
+            form.save()
+            return redirect('main')
+        except:
+            form.add_error(None, 'Ошибка')
+
+    data = {
+        'title': 'Добавить в группу',
+        'button_title': 'Добавить',
+        'form': form
+    }
+
+    return render(request, 'create.html', data)
+
+def change_member(request, member_id):
+    form = AddMemberForm(request.user, request.POST)
+
+    if form.is_valid():
+        try:
+            GroupMember.objects.get(id = member_id).update(form.changed_data)  
+            return redirect('main')
+        except:
+            form.add_error(None, 'Ошибка')
+
+    data = {
+        'title': 'Изменить члена группы',
+        'button_title': 'Изменить',
+        'form': form
+    }
+
+    return render(request, 'create.html', data)
 
 class Groups(ListView):
     model = Group
@@ -102,19 +161,20 @@ class AddGroup(CreateView):
 class ChangeGroup(UpdateView):
     model = Group
     form_class = AddgroupForm
-    template_name = 'create.html'
+    template_name = 'change.html'
     success_url = reverse_lazy('main')
+    context_object_name = 'group'
+
+class ChangeGroupMemder(UpdateView):
+    model = GroupMember
+    form_class = AddMemberForm
+    template_name = 'change.html'
+    success_url = reverse_lazy('main')
+    context_object_name = 'group_member'
 
     def get_context_data(self, *, object_list = None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Изменить группу'
-        context['button_title'] = 'Изменить группу'
+        context['group'] = self.object.group
         return context
 
-    def form_valid(self, form):
-        return super().form_valid(form)
-
-def pupa(request, pk):
-    data = {'title':'Добро пожаловать'}
-    return render(request, "create.html", context=data)
 

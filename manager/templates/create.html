@@ -1,4 +1,4 @@
-{% extends "form.html" %}
+{% extends "base.html" %}
 {% block in-out %}
 {% if request.user.is_authenticated %}
 <p class="label user-out"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></p>
@@ -6,3 +6,16 @@
 <meta http-equiv="Refresh" content="0; {% url 'login' %}">
 {% endif %}
 {% endblock in-out %}
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        {% for f in form %}
+        <p>
+            <label class="form-label" for="{{ f.id_for_label }}">
+                {{f.label}}: 
+            </label>{{ f }}
+        </p>
+        {% endfor %}
+        <button type="submit">{{button_title}}</button>
+    </form>
+{% endblock main %}

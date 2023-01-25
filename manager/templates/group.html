@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block in-out %}
+{% if request.user.is_authenticated %}
+<p class="label user-out"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></p>
+{% else %}
+<meta http-equiv="Refresh" content="0; {% url 'login' %}">
+{% endif %}
+{% endblock in-out %}
+{% block main %}
+    {% if request.user.id == group.user.id %}
+        <div class="scroll container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th colspan="5">Ваши группы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr> 
+                        <td>Ф.И.О.</td>
+                        <td>Дата рождения</td>
+                        <td>Номер телефона</td>
+                        <td>Изменить</td>           
+                    </tr>
+                    {% for member in members %}
+                    <tr>
+                        <td>{{member.name}}</td>
+                        <td>{{member.dateOfBirth}}</td>
+                        <td>{{member.phoneNumber}}</td>
+                        <td><a class="label" href="{% url 'change_member' member_id=member.pk %}">Изменить</a></td>
+                    </tr>
+                    {% endfor %}      
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <form method="get"> 
+                {% csrf_token %}
+                {% for f in form1 %}
+                <p>
+                    <label class="form-label" for="{{ f.id_for_label }}">
+                        {{f.label}}: 
+                    </label>{{ f }}
+                </p>
+                {% endfor %}
+                    <button type="submit" name="sort">Сортировать</button>
+            </form>
+        </div>
+        <div class="container">
+            <form method="post"> 
+                {% csrf_token %}
+                {% for f in form2 %}
+                <p>
+                    <label class="form-label" for="{{ f.id_for_label }}">
+                        {{f.label}}: 
+                    </label>{{ f }}
+                </p>
+                {% endfor %}
+                    <button type="submit" name="delete">Удалить</button>
+            </form>
+        </div>
+        
+    {% else %}
+        <p>У данного аккаунта нет группы с таким id</p>
+    {% endif %}
+{% endblock main %}
