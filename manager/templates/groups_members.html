@@ -27,7 +27,7 @@
                         <td>{{member.name}}</td>
                         <td>{{member.dateOfBirth}}</td>
                         <td>{{member.phoneNumber}}</td>
-                        <td><a class="label" href="{% url 'change_member' member_id=member.pk %}">Изменить</a></td>
+                        <td><a class="label" href="{% url 'change_group_member' member_id=member.pk %}">Изменить</a></td>
                     </tr>
                     {% endfor %}      
                 </tbody>

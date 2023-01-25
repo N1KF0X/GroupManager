@@ -9,114 +9,17 @@ from .forms import*
 from django.shortcuts import get_object_or_404
 
 
-def home(request):
+# Страница на которой происходит вход/авторизация
+def welcome(request):
     data = {'title':'Добро пожаловать'}
-    return render(request, "home.html", context=data)
+    return render(request, "welcome.html", context=data)
 
+# Функция для выхода из аккаунта 
 def logout_user(request):
     logout(request)
     return redirect('login')
 
-def main(request):
-    user_id = request.user.id
-    groups = Group.objects.filter(user_id = user_id)
-    form1 = GroupsOrderingForm(request.GET)
-    form2 = DeleteGroupForm(request.user, request.POST) 
-
-    if 'delete' in request.POST:
-        if form2.is_valid():
-            Group.objects.filter(name = form2.cleaned_data['deleteList'].name).delete()
-
-    if 'sort' in request.GET:
-        if form1.is_valid():
-            if form1.cleaned_data['ordering'] == "age":
-                groups = groups.order_by("minAge", "maxAge")
-            else:
-                groups = groups.order_by(form1.cleaned_data['ordering'])
-
-    data = {
-        'groups': groups, 
-        "form1": form1,
-        "form2": form2,
-        "title": "Группы"
-    }
-
-    return render(request, 'main.html', data)
-
-
-def group(request, group_id):
-    members = GroupMember.objects.filter(group_id = group_id)
-    form1 = MembersOrderingForm(request.GET)
-    form2 = DeleteMemderForm(group_id, request.POST)  
-    group = Group.objects.get(id = group_id)
-
-    if 'delete' in request.POST:
-        if form2.is_valid():
-            GroupMember.objects.filter(name = form2.cleaned_data['deleteList'].name).delete()
-
-    if 'sort' in request.GET:
-        if form1.is_valid():
-            members = members.order_by(form1.cleaned_data['ordering'])
-
-    data = {
-        'members': members, 
-        "form1": form1,
-        "form2": form2,
-        "title": group.name,
-        'group':  group
-    }
-
-    return render(request, 'group.html', data)
-
-def add_member(request):
-    form = AddMemberForm(request.user, request.POST)
-
-    if form.is_valid():
-        try:
-            form.save()
-            return redirect('main')
-        except:
-            form.add_error(None, 'Ошибка')
-
-    data = {
-        'title': 'Добавить в группу',
-        'button_title': 'Добавить',
-        'form': form
-    }
-
-    return render(request, 'create.html', data)
-
-def change_member(request, member_id):
-    form = AddMemberForm(request.user, request.POST)
-
-    if form.is_valid():
-        try:
-            GroupMember.objects.get(id = member_id).update(form.changed_data)  
-            return redirect('main')
-        except:
-            form.add_error(None, 'Ошибка')
-
-    data = {
-        'title': 'Изменить члена группы',
-        'button_title': 'Изменить',
-        'form': form
-    }
-
-    return render(request, 'create.html', data)
-
-class Groups(ListView):
-    model = Group
-    template_name = "main.html"
-    context_object_name = "groups"
-
-    def get_context_data(self, *, object_list = None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Менеджер групп'
-        return context
-    
-    def get_queryset(self):
-        return Group.objects.filter(user_id = self.request.user.id )
-
+# Страница для регистрации
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = 'reg.html'
@@ -128,12 +31,13 @@ class RegisterUser(CreateView):
         context['button_title'] = 'Создать аккаунт'
         return context
 
+# Страница для авторизации
 class LoginUser(LoginView):
     form_class = AuthenticationForm
     template_name = 'login.html'
     
     def get_success_url(self):
-        return reverse_lazy('main')
+        return reverse_lazy('groups')
 
     def get_context_data(self, *, object_list = None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -141,15 +45,37 @@ class LoginUser(LoginView):
         context['button_title'] = 'Войти'
         return context
 
+# Страница на которой отобращаются все группы,
+# на ней можно так же отсортировать список 
+# или удалить выбранную группу 
+class Groups(ListView):
+    model = Group
+    template_name = "groups.html"
+    context_object_name = "groups"
+
+    def get_context_data(self, *, object_list = None, **kwargs):
+        #sort_form = GroupsOrderingForm(self.request.user, self.request.GET)
+        #delete_form = GroupDelitionForm(self.request.user, self.request.POST)
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Группы'
+        #context['sort_form'] = sort_form 
+        #context['delete_form'] = delete_form 
+        return context
+    
+    def get_queryset(self):
+        return Group.objects.filter(user_id = self.request.user.id)
+
+
+# Страницца для создания группы
 class AddGroup(CreateView):
     form_class = AddgroupForm
-    template_name = 'create.html'
-    success_url = reverse_lazy('main') 
+    template_name = 'add.html'
+    success_url = reverse_lazy('groups') 
 
     def get_context_data(self, *, object_list = None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Создать группу'
-        context['button_title'] = 'Создать группу'
+        context['button_title'] = 'Подтвердить'
         return context
 
     def form_valid(self, form):
@@ -158,23 +84,71 @@ class AddGroup(CreateView):
         fields.save()
         return super().form_valid(form)
 
+# Страница для изменения группы
 class ChangeGroup(UpdateView):
     model = Group
     form_class = AddgroupForm
     template_name = 'change.html'
-    success_url = reverse_lazy('main')
+    success_url = reverse_lazy('groups')
     context_object_name = 'group'
 
+    def get_context_data(self, *, object_list = None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Изменить группу'
+        context['button_title'] = 'Подтвердить'
+        return context
+
+# Страница на которой отобращаются все члены группы,
+# на ней можно так же отсортировать список 
+# или удалить выбранного члена группы
+class GroupMembers(ListView):
+    model = GroupMember
+    template_name = "group_members.html"
+    context_object_name = "group_members"
+
+    def get_context_data(self, *, object_list = None, **kwargs):
+        #group_id = "id группы" # здесь id должен быть получен из строки запроса
+        context = super().get_context_data(**kwargs)
+        #context['title'] = Group.objects.get(id = group_id).name
+        #context['sort_form'] = GroupsOrderingForm()
+        #context['delete_form'] = GroupDelitionForm()
+        return context
+
+        
+    def get_queryset(self):
+        return Group.objects.filter(user_id = self.request.user.id)
+
+
+# Страницца для создания члена группы 
+class AddGroupMember(CreateView):
+    form_class = AddGroupMemberForm
+    template_name = 'add.html'
+    success_url = reverse_lazy('groups') 
+
+    def get_context_data(self, *, object_list = None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавить члена группы'
+        context['button_title'] = 'Подтвердить'
+        return context
+
+    def form_valid(self, form):
+        fields = form.save(commit=False)
+        fields.save()
+        return super().form_valid(form)
+
+# Страница для изменения члена группы
 class ChangeGroupMemder(UpdateView):
     model = GroupMember
-    form_class = AddMemberForm
+    form_class = AddGroupMemberForm
     template_name = 'change.html'
-    success_url = reverse_lazy('main')
+    success_url = reverse_lazy('groups')
     context_object_name = 'group_member'
 
     def get_context_data(self, *, object_list = None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['group'] = self.object.group
+        context['title'] = 'Изменить группу'
+        context['button_title'] = 'Подтвердить'
         return context
 
 

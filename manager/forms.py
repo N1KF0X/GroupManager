@@ -24,7 +24,7 @@ class AddgroupForm(forms.ModelForm):
         return maxAge
 
 
-class AddMemberForm(forms.ModelForm):
+class AddGroupMemberForm(forms.ModelForm):
     
     class Meta:
         model = GroupMember
@@ -56,12 +56,12 @@ class MembersOrderingForm(forms.Form):
         ["dateOfBirth", "По дате рождения"]
     ])
 
-class DeleteGroupForm(forms.Form):
+class GroupDelitionForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['deleteList'].queryset = Group.objects.filter(user_id = user.id).order_by('name')
-        
-    deleteList = forms.ModelChoiceField(label= 'Название группы', queryset = None)
+        self.fields['group_list'].queryset = Group.objects.filter(user_id = user.id).order_by('name')
+
+    group_list = forms.ModelChoiceField(label= 'Удалить группу', queryset = None, empty_label='Выбрать')
 
 class DeleteMemderForm(forms.Form):
     def __init__(self, group_id, *args, **kwargs):
