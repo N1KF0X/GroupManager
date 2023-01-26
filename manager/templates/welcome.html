@@ -3,6 +3,9 @@
 {% if request.user.is_authenticated %}
 <meta http-equiv="Refresh" content="0; {% url 'groups' %}">
 {% else %}
-<p class="label"><a href="{% url 'reg' %}">Зарегистрироваться</a> | <a href="{% url 'login' %}">Войти</a></p>
+<p class="label">
+    <a href="{% url 'reg' %}">Зарегистрироваться</a> | 
+    <a href="{% url 'login' %}">Войти</a>
+</p>
 {% endif %}
 {% endblock main %}

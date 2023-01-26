@@ -3,15 +3,5 @@
 <p class="label user-out"><a href="{% url 'reg' %}">Создать новый аккаунт</a></p>
 {% endblock in-out %}
 {% block main %}
-    <form method="post">
-        {% csrf_token %}
-        {% for f in form %}
-        <p>
-            <label class="form-label" for="{{ f.id_for_label }}">
-                {{f.label}}: 
-            </label>{{ f }}
-        </p>
-        {% endfor %}
-        <button type="submit">{{button_title}}</button>
-    </form>
+{% include "form.html" with form=form button_title=button_title request_method='post' %}
 {% endblock main %}

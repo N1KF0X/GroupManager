@@ -1,13 +1,5 @@
-{% extends "base.html" %}
-{% block in-out %}
-{% if request.user.is_authenticated %}
-<p class="label user-out"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></p>
-{% else %}
-<meta http-equiv="Refresh" content="0; {% url 'login' %}">
-{% endif %}
-{% endblock in-out %}
-{% block main %}
-<div class="scroll container">
+{% extends "list.html" %}
+{% block table %}
     <table class="data-table">
         <thead>
             <tr>
@@ -27,35 +19,13 @@
                 <td>{{group.name}}</td>
                 <td>{{group.course}}</td>
                 <td>{{group.minAge}} - {{group.maxAge}}</td>
-                <td>0/{{group.capacity}}</td>
+                <td>{{group.members_amount}}/{{group.capacity}}</td>
                 <td><a class="label" href="{% url 'change' group.pk %}">Изменить</a> | <a class="label" href="{% url 'group_members' group.pk %}">Перейти</a></td>
             </tr>
             {% endfor %}      
         </tbody>
     </table>
-</div>
-<div class="container">
-    <form method="get"> 
-        {% csrf_token %}
-        {{ sort_form }}
-        <button type="submit" name="sort">Сортировать</button>
-    </form>
-</div>
-<div class="container">
-    <form method="post"> 
-        {% csrf_token %}
-        {{ delete_form }}
-        <button type="submit" name="delete">Удалить</button>
-    </form>
-</div>
-<div class="container">
-    <p>
-        <a class="label" href="{% url 'add_group' %}">Добавить группу</a>
-    </p>
-</div>
-<div class="container">
-    <p>
-        <a class="label" href="{% url 'add_group_member' %}">Добавить в группу</a>
-    </p>
-</div>
-{% endblock main %}
+{% endblock table %}
+{% block url %}
+    <a class="label" href="{% url 'add_group' %}">Добавить группу</a>
+{% endblock url %}

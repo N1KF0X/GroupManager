@@ -1,0 +1,11 @@
+<form method="{{request_method}}">
+    {% csrf_token %}
+    {% for f in form %}
+    <p>
+        <label class="form-label" for="{{ f.id_for_label }}">
+            {{f.label}}: 
+        </label>{{ f }}
+    </p>
+    {% endfor %}
+    <button type="submit" name="{{button_name}}">{{button_title}}</button>
+</form>

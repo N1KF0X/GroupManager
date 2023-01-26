@@ -10,6 +10,7 @@ class Group(models.Model):
     course = models.CharField(max_length = 20, verbose_name="Курс/Направление")
     minAge = models.PositiveIntegerField(verbose_name="Минимальный возраст")
     maxAge = models.PositiveIntegerField(verbose_name="Максимальный возраст")
+    members_amount = models.PositiveIntegerField(verbose_name="Количество записанных")
     capacity = models.PositiveIntegerField(verbose_name="Количество мест")
 
     def __str__(self):

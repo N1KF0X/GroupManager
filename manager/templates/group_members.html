@@ -1,0 +1,33 @@
+{% extends "list.html" %}
+{% block table %}
+    {% if request.user.id == group.user.id %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th colspan="4">Люди в группе</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr> 
+                    <td>Ф.И.О.</td>
+                    <td>Дата рождения</td>
+                    <td>Номер телефона</td>
+                    <td>Изменить</td>           
+                </tr>
+                {% for member in group_members %}
+                <tr>
+                    <td>{{member.name}}</td>
+                    <td>{{member.dateOfBirth}}</td>
+                    <td>{{member.phoneNumber}}</td>
+                    <td><a class="label" href="{% url 'change_member' member_id=member.pk %}">Изменить</a></td>
+                </tr>
+                {% endfor %}      
+            </tbody>
+        </table>                
+    {% else %}
+        <meta http-equiv="Refresh" content="0; {% url 'not_your_group' %}">
+    {% endif %}             
+{% endblock table %}
+{% block url %}
+    <a class="label" href="{% url 'groups' %}">Вернуться к группам</a>
+{% endblock url %}

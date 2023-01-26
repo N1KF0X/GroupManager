@@ -11,11 +11,12 @@ urlpatterns = [
     path("login/", LoginUser.as_view(), name = "login"),
     path("reg/", RegisterUser.as_view(), name="reg"),
 
-    path("groups/", Groups.as_view(), name='groups'),
+    path("groups/", groups, name='groups'),
     path("add_group/", AddGroup.as_view(), name="add_group"), 
     path('change_group/<int:pk>', ChangeGroup.as_view(), name = 'change'),
 
-    path('group_members/<int:group_id>', GroupMembers.as_view(), name = 'group'),
-    path("add_group_members/", AddGroupMember.as_view(), name="add_group_member"),
-    path('change_group_members/<int:member_id>', ChangeGroupMemder.as_view(), name='change_member')
+    path('group_members/<int:group_id>', group_members, name = 'group_members'),
+    path("add_group_member/", add_group_member, name="add_group_member"),
+    path('change_group_members/<int:member_id>', change_group_member, name='change_member'),
+    path('not_your_group/', not_your_group, name='not_your_group'),
 ]

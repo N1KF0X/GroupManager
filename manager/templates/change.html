@@ -1,18 +1,8 @@
 {% extends "base.html" %}
 {% block main %}
     {% if request.user.id == group.user.id %}
-        <form method="post">
-            {% csrf_token %}
-            {% for f in form %}
-                <p>
-                    <label class="form-label" for="{{ f.id_for_label }}">
-                        {{f.label}}: 
-                    </label>{{ f }}
-                </p>
-            {% endfor %}
-            <button type="submit">{{button_title}}</button>
-        </form>
+        {% include "form.html" with form=form button_title=button_title request_method='post' %}
     {% else %}
-        <p>У данного аккаунта нет группы с таким id</p>
+        <meta http-equiv="Refresh" content="0; {% url 'not_your_group' %}">
     {% endif %}
 {% endblock main %}

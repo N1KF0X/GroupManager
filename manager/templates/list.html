@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="scroll container">
+    {% block table %}{% endblock table %}
+</div>
+<div class="container">
+    {% include "form.html" with form=ordering_form button_title=sort_button_title request_method='get' button_name='sort' %}
+    {% include "form.html" with form=deletion_form button_title=deletion_button_title request_method='post' button_name='delete'%}
+    <p>
+        {% block url %}{% endblock url %}
+    </p>
+    <p>
+        <a class="label" href="{% url 'add_group_member' %}">Добавить в группу</a>
+    </p>
+</div>
+{% endblock main %}
