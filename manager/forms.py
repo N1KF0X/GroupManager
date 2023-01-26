@@ -3,7 +3,16 @@ from .models import *
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 
-class AddgroupForm(forms.ModelForm):
+class RegisterUserForm(UserCreationForm):
+    username = forms.CharField(label="Имя пользователя", widget = forms.TextInput(attrs={'class': 'form-input'}))
+    password1 = forms.CharField(label="Пароль", widget = forms.PasswordInput(attrs={'class': 'form-input'}))
+    password2 = forms.CharField(label="Подтверждение пароля", widget = forms.PasswordInput(attrs={'class': 'form-input'}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2')
+
+class AddGroupForm(forms.ModelForm):
 
     class Meta:
         model = Group
@@ -14,7 +23,7 @@ class AddgroupForm(forms.ModelForm):
         #    'course': forms.IntegerField(attrs={'class': 'form-input'}),
         #    'course': forms.IntegerField(attrs={'class': 'form-input'}),
         #    'course': forms.IntegerField(attrs={'class': 'form-input'}),
-        #}
+        #}DateField()
 
     def clean_maxAge(self):
         minAge = self.cleaned_data['minAge']
@@ -23,32 +32,46 @@ class AddgroupForm(forms.ModelForm):
             raise ValidationError('Минимальный врзраст не может быть больше максимального')
         return maxAge
 
-#class ChangeGroupForm(forms.Form):
-
-
+class GroupsOrderingForm(forms.Form):
     
-class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label="Имя пользователя", widget = forms.TextInput(attrs={'class': 'form-input'}))
-    password1 = forms.CharField(label="Пароль", widget = forms.PasswordInput(attrs={'class': 'form-input'}))
-    password2 = forms.CharField(label="Подтверждение пароля", widget = forms.PasswordInput(attrs={'class': 'form-input'}))
-    class Meta:
-        model = User
-        fields = ('username', 'password1', 'password2')
-
-class OrderingForm(forms.Form):
     ordering = forms.ChoiceField(label = "Сортировать по", required=False, choices=[
         ["name", "По название"],
         ["course", "По направлению/курсу"],
-        ["age" , "По возрасту"],
+        ["age" , "По возрасту"]
     ])
 
-class DeleteForm(forms.Form):
-    deleteList = forms.ModelChoiceField(label= 'Название группы', queryset=Group.objects.all())
+class GroupDeletionForm(forms.Form):
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['group_list'].queryset = Group.objects.filter(user_id = user.id).order_by('name')
 
-   # name = forms.CharField(max_length=20, label="Имя группы", widget=forms.TextInput(attrs={'class': 'form-input'}))
-   # course = forms.CharField(max_length=20, label="Направление/Курс")
-   # minAge = forms.IntegerField(label="Минимальный возраст")
-   # maxAge = forms.IntegerField(label="Максимальный возраст")
-   # capacity = forms.IntegerField(label="Максимальное количество человек")
+    group_list = forms.ModelChoiceField(label= 'Удалить группу', queryset = None, empty_label='Выбрать')
+
+class AddGroupMemberForm(forms.ModelForm):
+    def __init__(self, user_id, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['group'].queryset = Group.objects.filter(user_id = user_id).order_by('name')
+        self.fields['group'].empty_label=None
+
+    class Meta:
+        model = GroupMember
+        fields = ['name', 'dateOfBirth', 'phoneNumber', 'group']
+        widgets = {
+            'dateOfBirth': forms.SelectDateWidget(),
+        }
+
+class MembersOrderingForm(forms.Form):
+    ordering = forms.ChoiceField(label = "Сортировать по", required=False, choices=[
+        ["name", "По Ф.И.О."],
+        ["dateOfBirth", "По дате рождения"]
+    ])
+
+class MemberDeletionForm(forms.Form):
+    def __init__(self, group_id, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['members_list'].queryset = GroupMember.objects.filter(group_id = group_id).order_by('name')
+
+    members_list = forms.ModelChoiceField(label= 'Удалить из группы', queryset = None, empty_label='Выбрать')
+
 
 

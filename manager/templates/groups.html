@@ -1,0 +1,31 @@
+{% extends "list.html" %}
+{% block table %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th colspan="5">Ваши группы</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr> 
+                <td>Название группы</td>
+                <td>Направление</td>
+                <td>Возраст</td>
+                <td>Количество</td>      
+                <td>Просмотреть группу</td>           
+            </tr>
+            {% for group in groups %}
+            <tr>
+                <td>{{group.name}}</td>
+                <td>{{group.course}}</td>
+                <td>{{group.minAge}} - {{group.maxAge}}</td>
+                <td>{{group.members_amount}}/{{group.capacity}}</td>
+                <td><a class="label" href="{% url 'change' group.pk %}">Изменить</a> | <a class="label" href="{% url 'group_members' group.pk %}">Перейти</a></td>
+            </tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+{% endblock table %}
+{% block url %}
+    <a class="label" href="{% url 'add_group' %}">Добавить группу</a>
+{% endblock url %}

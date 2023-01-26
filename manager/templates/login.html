@@ -1,4 +1,7 @@
-{% extends "form.html" %}
+{% extends "base.html" %}
 {% block in-out %}
 <p class="label user-out"><a href="{% url 'reg' %}">Создать новый аккаунт</a></p>
 {% endblock in-out %}
+{% block main %}
+{% include "form.html" with form=form button_title=button_title request_method='post' %}
+{% endblock main %}
