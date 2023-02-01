@@ -33,10 +33,10 @@
 
 ## Документация 
 **Пользовательская документация:**
-* [Руководство пользователя](https://github.com/N1KF0X/GroupManager/blob/master/Documentations/Функциональные%20требования.docx)
+* [Руководство пользователя](https://github.com/N1KF0X/GroupManager/blob/master/Documentations/Руководство_пользователя.docx)
 
 **Документация разработки:**
-* [Техническое задание](https://github.com/N1KF0X/GroupManager/blob/master/Documentations/ТЗ.docx)
+* [Техническое задание](https://github.com/N1KF0X/GroupManager/blob/master/Documentations/Техническое%20задание.docx)
 * [Спецификация](https://github.com/N1KF0X/GroupManager/blob/master/Documentations/Спецификация.docx)
 * [Функциональные требования](https://github.com/N1KF0X/GroupManager/blob/master/Documentations/Функциональные%20требования.docx)
 * [Преценденты](https://github.com/N1KF0X/GroupManager/blob/master/Documentations/Преценденты.docx)
